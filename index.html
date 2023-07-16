@@ -46,23 +46,71 @@
 const names = ["Omeri", "Arditi", "Azemi", "Rezoni", "Asnjoni"];
 
 function whosPaying(names) {
-  const listNames = names.length;
-  const random = Math.floor(Math.random() * listNames);
-  const randomPerson = names[random];
+  const outputContainer = document.getElementById("outputContainer");
 
-  if (randomPerson === "Asnjoni") {
-    return "Krejt pagujn perveti!";
-  } else {
-    return randomPerson + " e ka renin me qaros sonte!";
+  // Start the slot machine animation
+  startSlotMachine();
+
+  // After a certain duration, display the result
+  setTimeout(function() {
+    const randomPerson = names[Math.floor(Math.random() * names.length)];
+
+    if (randomPerson === "Asnjoni") {
+      animateText("Krejt pagujn perveti!");
+    } else {
+      animateText(randomPerson + " e ka renin me qaros sonte!");
+    }
+  }, 3000); // Adjust the duration of the slot machine animation (in milliseconds)
+
+  function startSlotMachine() {
+    let index = 0;
+    const shuffledNames = shuffleArray(names);
+
+    // Shuffle the names array every 100 milliseconds
+    const shuffleInterval = setInterval(function() {
+      outputContainer.textContent = shuffledNames[index];
+      index++;
+
+      if (index >= shuffledNames.length) {
+        index = 0;
+      }
+    }, 100); // Adjust the speed of the slot machine animation (in milliseconds)
+
+    // Stop the slot machine animation after a certain duration
+    setTimeout(function() {
+      clearInterval(shuffleInterval);
+    }, 3000); // Same duration as the setTimeout above
+  }
+
+  function shuffleArray(array) {
+    const newArray = array.slice();
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  }
+
+  function animateText(text) {
+    outputContainer.textContent = ""; // Clear previous content
+    let index = 0;
+
+    function addCharacter() {
+      outputContainer.textContent += text[index];
+      index++;
+
+      if (index < text.length) {
+        setTimeout(addCharacter, 100); // Delay between characters (adjust as needed)
+      }
+    }
+
+    addCharacter();
   }
 }
 
-console.log(whosPaying(names));
-
-  document.getElementById("showOutputButton").addEventListener("click", function() {
-    const outputContainer = document.getElementById("outputContainer");
-    outputContainer.textContent = whosPaying(names);
-  });
+document.getElementById("showOutputButton").addEventListener("click", function() {
+  whosPaying(names);
+});
   </script>
 </body>
 </html>
