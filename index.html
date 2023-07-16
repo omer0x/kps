@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kush pagun sonte ?</title>
+  <style>
+     body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	top: 20em;	
+}    
+
+     #showOutputButton {
+	padding: 5px;
+	font-size: 30px;
+	font-weight: 900;
+	height: fit-content;
+	width: fit-content;
+	cursor: pointer;
+}    
+
+
+    .output {
+      margin-top: 10px;
+      padding: 5px;
+      border: 2px solid #000;
+      height: 5em;
+      width: 20em;
+      font-size: 20px;
+      font-weight: bold;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+
+  </style>
+</head>
+<body>
+  <button id="showOutputButton">Kush pagun sonte ?</button>
+  <div class="output" id="outputContainer"></div>
+
+  <script>
+   	  
+const names = ["Omeri", "Arditi", "Azemi", "Rezoni", "Asnjoni"];
+
+function whosPaying(names) {
+  const listNames = names.length;
+  const random = Math.floor(Math.random() * listNames);
+  const randomPerson = names[random];
+
+  if (randomPerson === "Asnjoni") {
+    return "Krejt pagujn perveti!";
+  } else {
+    return randomPerson + " e ka renin me qaros sonte!";
+  }
+}
+
+console.log(whosPaying(names));
+
+  document.getElementById("showOutputButton").addEventListener("click", function() {
+    const outputContainer = document.getElementById("outputContainer");
+    outputContainer.textContent = whosPaying(names);
+  });
+  </script>
+</body>
+</html>
